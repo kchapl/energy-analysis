@@ -1,11 +1,9 @@
 package energyanalysis
 
 import scala.io.Source
+import scala.util.Using
 
 object File:
 
   def fetch(path: String): List[String] =
-    val src = Source.fromFile(path)
-    val lines = src.getLines.toList
-    src.close()
-    lines
+    Using(Source.fromFile(path))(_.getLines.toList).get

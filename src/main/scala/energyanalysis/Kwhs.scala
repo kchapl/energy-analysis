@@ -5,6 +5,7 @@ object Kwhs:
 
   object Kwh:
     def apply(d: Double): Kwh = d
+    // TODO: calculate
     def fromCubicMetresGas(d: Double): Kwh = d
 
   extension (usage: Kwh)

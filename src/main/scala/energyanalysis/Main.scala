@@ -12,10 +12,11 @@ import scala.io.Source
 def main(): Unit =
   val electricityReadings = File.fetch("../../Desktop/EnergyData/electricity.csv").drop(1)
   val gasReadings = File.fetch("../../Desktop/EnergyData/gas.csv").drop(1)
-  val date1 = LocalDate.of(2022, 11, 1)
-  val date2 = LocalDate.of(2022, 11, 30)
   val electricityBetween = electricityUse(electricityReadings.map(Reading.fromLine))
   val gasBetween = gasUse(gasReadings.map(Reading.fromLine))
-  val electricity = electricityBetween(date1, date2)
-  val gas = gasBetween(date1, date2)
-  println(s"$date1: $date2: ${electricity.round}: ${gas.round}")
+  for (month <- monthsInYear(2022))
+    val start = month.atDay(1)
+    val end = month.atEndOfMonth
+    val electricity = electricityBetween(start, end)
+    val gas = gasBetween(start, end)
+    println(s"$start: $end: ${electricity.round}: ${gas.round}")

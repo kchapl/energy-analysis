@@ -1,6 +1,6 @@
 package energyanalysis
 
-import java.time.LocalDate
+import java.time.{LocalDate, YearMonth}
 
 object Time {
 
@@ -9,4 +9,7 @@ object Time {
 
   def isSameOrAfter(ref: LocalDate)(date: LocalDate): Boolean =
     date == ref || date.isAfter(ref)
+
+  def monthsInYear(year: Int): Seq[YearMonth] =
+    for (month <- 1 to 12) yield YearMonth.of(year, month)
 }
