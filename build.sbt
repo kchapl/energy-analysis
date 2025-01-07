@@ -5,5 +5,5 @@ lazy val root = project
   .settings(
     name := "energy-analysis",
     scalaVersion := scala3Version,
-    libraryDependencies += "org.scalameta" %% "munit" % "1.0.3" % Test
+    libraryDependencies += "org.scalameta" %% "munit" % "1.0.4" % Test
   )
