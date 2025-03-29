@@ -11,7 +11,7 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-scala@v10
+      - uses: actions/setup-scala@v2
 
       - uses: actions/setup-java@v4
         with:
@@ -25,4 +25,3 @@ jobs:
           scalafmtCheckAll
           scalafmtSbtCheck
           test
-          
