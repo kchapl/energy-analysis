@@ -10,4 +10,4 @@ object Kwhs:
 
   extension (usage: Kwh)
     def +(kwh: Kwh): Kwh = usage + kwh
-    def round: Kwh = Number.round(usage, 4)
+    def round: Kwh       = Number.round(usage, 4)

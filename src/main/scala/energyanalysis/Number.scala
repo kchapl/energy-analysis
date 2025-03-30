@@ -10,7 +10,7 @@ object Number {
       if dbl > 10 then go(dbl / 10, multiple * 10)
       else if dbl < 1 then go(dbl * 10, multiple / 10)
       else multiple
-    val firstMultiple = go(math.abs(d), 1)
+    val firstMultiple  = go(math.abs(d), 1)
     val secondMultiple = math.pow(10, numSigFigs - 1)
     (d * secondMultiple / firstMultiple).round / secondMultiple * firstMultiple
 }

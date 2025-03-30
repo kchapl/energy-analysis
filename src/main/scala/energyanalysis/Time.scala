@@ -1,6 +1,6 @@
 package energyanalysis
 
-import java.time.{LocalDate, YearMonth}
+import java.time.{ LocalDate, YearMonth }
 
 object Time {
 

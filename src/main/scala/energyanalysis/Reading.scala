@@ -1,9 +1,9 @@
 package energyanalysis
 
-import energyanalysis.Time.{isSameOrAfter, isSameOrBefore}
+import energyanalysis.Time.{ isSameOrAfter, isSameOrBefore }
 import energyanalysis.Kwhs.Kwh
 
-import java.time.{LocalDate, ZonedDateTime}
+import java.time.{ LocalDate, ZonedDateTime }
 
 case class Reading(consumption: Double, start: ZonedDateTime, end: ZonedDateTime)
 
