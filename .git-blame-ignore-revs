@@ -1,0 +1,6 @@
+# Ignore selected commits in blame.
+# To use this file, configure git:
+# git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# Largescale reformatting
+301d65cd0bb78d4e5453f0693fc0fb6b92ca6738
