@@ -17,7 +17,7 @@ jobs:
           java-version: 21
           cache: sbt
 
-      - uses: sbt/setup-sbt@v1
+      - uses: sbt/setup-sbt@85af9638eecda647772cdd6e4caf9d41d8d3c331 # v1.0.0
 
       - name: Run SBT tasks
         run: >
@@ -25,4 +25,3 @@ jobs:
           scalafmtCheckAll
           scalafmtSbtCheck
           test
-          
