@@ -17,7 +17,7 @@ jobs:
           java-version: 21
           cache: sbt
 
-      - uses: sbt/setup-sbt@85af9638eecda647772cdd6e4caf9d41d8d3c331 # v1.0.0
+      - uses: sbt/setup-sbt@26ab4b0fa1c47fa62fc1f6e51823a658fb6c760c # v1.1.7
 
       - name: Run SBT tasks
         run: >
