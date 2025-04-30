@@ -5,8 +5,7 @@ object Kwhs:
 
   object Kwh:
     def apply(d: Double): Kwh = d
-    // TODO: calculate
-    def fromCubicMetresGas(d: Double): Kwh = d
+    def fromCubicMetresGas(d: Double): Kwh = d * 11.2 // Standard conversion factor: 1m³ = 11.2 kWh
 
   extension (usage: Kwh)
     def +(kwh: Kwh): Kwh = usage + kwh
