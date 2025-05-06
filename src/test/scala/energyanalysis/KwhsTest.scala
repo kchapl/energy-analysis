@@ -17,6 +17,6 @@ class KwhsTest extends AnyFunSuite {
   test("fromCubicMetresGas should convert correctly") {
     val cubicMetres = 10.0
     val kwh         = Kwhs.Kwh.fromCubicMetresGas(cubicMetres)
-    assert(kwh == Kwhs.Kwh(10.0))
+    assert(kwh == Kwhs.Kwh(112.0))
   }
 }
