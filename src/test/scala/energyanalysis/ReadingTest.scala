@@ -10,8 +10,8 @@ class ReadingTest extends AnyFunSuite {
     assert(result.isRight)
     val reading = result.toOption.get
     assert(reading.consumption == 10.5)
-    assert(reading.start.toString == "2023-06-15T10:00:00+01:00")
-    assert(reading.end.toString == "2023-06-15T11:00:00+01:00")
+    assert(reading.start.toString == "2023-06-15T10:00+01:00")
+    assert(reading.end.toString == "2023-06-15T11:00+01:00")
   }
 
   test("fromLine should handle invalid field count") {
