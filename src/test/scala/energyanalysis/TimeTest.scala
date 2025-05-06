@@ -1,11 +1,11 @@
 package energyanalysis
 
 import org.scalatest.funsuite.AnyFunSuite
-import java.time.{LocalDate, YearMonth}
+import java.time.{ LocalDate, YearMonth }
 
 class TimeTest extends AnyFunSuite {
   val referenceDate = LocalDate.of(2023, 6, 15)
-  
+
   test("isSameOrBefore should work correctly") {
     assert(Time.isSameOrBefore(referenceDate)(referenceDate))
     assert(Time.isSameOrBefore(referenceDate)(referenceDate.minusDays(1)))
