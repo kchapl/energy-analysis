@@ -4,7 +4,7 @@ lazy val root = project
     name         := "energy-analysis",
     scalaVersion := "3.7.3",
     libraryDependencies ++= Seq(
-      "org.scalameta" %% "munit"     % "1.1.1"  % Test,
+      "org.scalameta" %% "munit"     % "1.1.2"  % Test,
       "org.scalatest" %% "scalatest" % "3.2.19" % Test
     )
   )
