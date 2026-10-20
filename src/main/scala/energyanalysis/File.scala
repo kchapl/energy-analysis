@@ -15,7 +15,7 @@ object File:
   def fetch(path: String): Either[FileError, List[String]] =
     Try {
       Using(Source.fromFile(path)) { source =>
-        source.getLines.toList
+        source.getLines().toList
       }.get
     }.toEither.left.map {
       case e: FileNotFoundException => FileNotFound(path)
