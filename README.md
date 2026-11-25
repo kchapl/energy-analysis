@@ -36,3 +36,6 @@ printf 'jdk latest=27.0.1 lts=21.0.13,25.0.5\nscala latest=3.10.1 lts=3.3.9,3.9.
   > toolchain-snapshot.txt
 sbt "runMain energyanalysis.ToolchainCheck --snapshot toolchain-snapshot.txt"
 ```
+
+It prints one line per tool, then `status: ok`, `status: drift` or `status: fail`, and exits 0, 1,
+2 or 3 to match, so a script can branch on either the status line or the exit code.
