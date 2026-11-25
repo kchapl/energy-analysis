@@ -1,0 +1,11 @@
+# Local tool management.
+#
+# The JDK is declared once, in .java-version: mise reads it as an idiomatic
+# version file, and CI reads the same file through actions/setup-java. The sbt
+# entry provides the launcher only; project/build.properties pins the sbt that
+# the build actually runs.
+[settings]
+idiomatic_version_file_enable_tools = ["java"]
+
+[tools]
+sbt = "1.12.11"
