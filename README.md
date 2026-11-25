@@ -18,8 +18,13 @@ Each version is declared in exactly one place:
 | Scala | `scalaVersion` in `build.sbt` |
 | sbt   | `project/build.properties`    |
 
-`.java-version` is read by CI through `actions/setup-java`, and by local tool managers such as
-mise, asdf and jenv, so the pipeline and your machine run the same JDK.
+`.java-version` is read by CI through `actions/setup-java`, and by mise, asdf and jenv, so the
+pipeline and your machine run the same JDK. `mise.toml` enables mise's idiomatic version-file
+support for Java, which is how mise picks the JDK up without restating it:
+
+```
+mise install
+```
 
 The scheduled `Toolchain drift` workflow compares those declarations against what upstream
 publishes and reports drift. It runs on a schedule and on demand, not as a pull-request check, so
