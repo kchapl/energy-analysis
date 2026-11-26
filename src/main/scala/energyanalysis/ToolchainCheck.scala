@@ -44,20 +44,15 @@ object ToolchainCheck:
 
   private def evaluate(root: String, snapshot: String): Either[String, List[Toolchain.Finding]] =
     for
-      jdk       <- readVersion(root, ".java-version")
+      jdk       <- readMise(root)
       scala     <- readMatch(root, "build.sbt", ScalaVersion)
       sbt       <- readMatch(root, "project/build.properties", SbtVersion)
       declared  <- Toolchain.declaredVersions(jdk, scala, sbt)
       published <- read(snapshot).flatMap(Toolchain.Snapshot.parse)
     yield Toolchain.check(declared, published)
 
-  private def readVersion(root: String, file: String): Either[String, String] =
-    read(path(root, file)).flatMap { text =>
-      text.linesIterator
-        .map(_.trim)
-        .find(_.nonEmpty)
-        .toRight(s"$file does not declare a version")
-    }
+  private def readMise(root: String): Either[String, String] =
+    read(path(root, "mise.toml")).flatMap(Toolchain.miseJava)
 
   private def readMatch(root: String, file: String, pattern: Regex): Either[String, String] =
     read(path(root, file)).flatMap { text =>

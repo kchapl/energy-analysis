@@ -14,13 +14,14 @@ Each version is declared in exactly one place:
 
 | Tool  | Declared in                   |
 | ----- | ----------------------------- |
-| JDK   | `.java-version`               |
+| JDK   | `java` in `mise.toml`         |
 | Scala | `scalaVersion` in `build.sbt` |
 | sbt   | `project/build.properties`    |
 
-`.java-version` is read by CI through `actions/setup-java`, and by mise, asdf and jenv, so the
-pipeline and your machine run the same JDK. `mise.toml` enables mise's idiomatic version-file
-support for Java, which is how mise picks the JDK up without restating it:
+`mise.toml` names the JDK as distribution and release, `java = "temurin-25"`, so CI and a
+developer machine resolve the same build; the `sbt` entry beside it installs the launcher only,
+because `project/build.properties` decides the sbt the build runs. CI installs those tools with
+`jdx/mise-action`, so the pipeline reads the same file as your machine:
 
 ```
 mise install
