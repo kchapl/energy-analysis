@@ -4,9 +4,9 @@ package energyanalysis
  * The toolchain policy, and the check that says whether the declared versions still match it.
  *
  * The policy: the JDK and Scala track the latest LTS release, sbt tracks the latest stable release.
- * What is declared lives in the repository; what is published arrives as an [[Toolchain.Upstream]]
- * snapshot. [[Toolchain.check]] turns the two into verdicts and performs no I/O, so its verdicts
- * are deterministic and can be tested without network access.
+ * What is declared lives in the repository, read by [[Declarations]]; what is published arrives as
+ * an [[Toolchain.Upstream]] snapshot. [[Toolchain.check]] turns the two into verdicts and performs
+ * no I/O, so its verdicts are deterministic and can be tested without network access.
  */
 object Toolchain:
 
@@ -161,35 +161,6 @@ object Toolchain:
   def report(findings: List[Finding]): String = findings.map(_.message).mkString("\n")
 
   def failed(findings: List[Finding]): Boolean = findings.exists(_.isFailure)
-
-  private val MiseJava = """(?m)^\s*java\s*=\s*"([^"]+)"""".r
-
-  /**
-   * Reads the JDK request from a mise config, such as `java = "temurin-25"`. A request names the
-   * distribution as well as the version, and the policy compares versions, so only the version part
-   * is kept.
-   */
-  def miseJava(config: String): Either[String, String] =
-    MiseJava
-      .findFirstMatchIn(config)
-      .map(found => found.group(1).dropWhile(character => !character.isDigit))
-      .filter(_.nonEmpty)
-      .toRight("mise.toml does not declare a java version")
-
-  /**
-   * Reads the three declared values as versions. A malformed value fails here rather than being
-   * carried into a verdict.
-   */
-  def declaredVersions(jdk: String, scala: String, sbt: String): Either[String, List[Declared]] =
-    for
-      jdkVersion   <- Version.parse(jdk).left.map(error => s"jdk: $error")
-      scalaVersion <- Version.parse(scala).left.map(error => s"scala: $error")
-      sbtVersion   <- Version.parse(sbt).left.map(error => s"sbt: $error")
-    yield List(
-      Declared(Tool.Jdk, jdkVersion),
-      Declared(Tool.Scala, scalaVersion),
-      Declared(Tool.Sbt, sbtVersion)
-    )
 
   /**
    * The JDK declaration names a feature release, so only its major number is meaningful: asking for
