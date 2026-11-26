@@ -22,8 +22,4 @@ jobs:
       - uses: sbt/setup-sbt@v1.5.15
 
       - name: Run SBT tasks
-        run: >
-          sbt
-          scalafmtCheckAll
-          scalafmtSbtCheck
-          test
+        run: sbt "scalafmtCheckAll; scalafmtSbtCheck; test"
