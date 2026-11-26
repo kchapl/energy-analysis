@@ -1,39 +1,32 @@
 package energyanalysis
 
-import energyanalysis.Number.*
-import energyanalysis.Reading.*
-import energyanalysis.Time.*
-
-import java.time.{ LocalDate, YearMonth }
-import scala.annotation.tailrec
+import java.time.YearMonth
 
 @main
 def main(electricityPath: String, gasPath: String, year: Int = YearMonth.now().getYear): Unit =
-  def processFile(path: String): Either[FileError, List[String]] =
-    File.fetch(path).map(_.drop(1))
+  def abort(message: String): Nothing =
+    Console.err.println(message)
+    sys.exit(1)
 
-  def handleErrors[E](source: String)(result: Either[E, ?]): Unit =
-    result match
-      case Left(error) => println(s"Error processing $source: $error")
-      case Right(_)    => ()
+  def lines(path: String): List[String] =
+    File.fetch(path) match
+      case Right(lines) => lines
+      case Left(error)  => abort(s"Error reading $path: $error")
 
-  for
-    electricityLines <- processFile(electricityPath)
-    gasLines         <- processFile(gasPath)
-  do
-    val electricityReadings = electricityLines.map(Reading.fromLine)
-    val gasReadings         = gasLines.map(Reading.fromLine)
+  MonthlyUsage.validateYear(year) match
+    case Left(error) => abort(s"Error processing year $year: $error")
+    case Right(_)    => ()
 
-    // Log any parsing errors
-    electricityReadings.collect { case Left(error) => handleErrors("electricity")(Left(error)) }
-    gasReadings.collect { case Left(error) => handleErrors("gas")(Left(error)) }
+  val report =
+    MonthlyUsage.report(lines(electricityPath), lines(gasPath), year) match
+      case Right(report) => report
+      case Left(error)   => abort(s"Error processing year $year: $error")
 
-    val electricityBetween = electricityUse(electricityReadings)
-    val gasBetween         = gasUse(gasReadings)
+  report.problems.foreach { problem =>
+    Console.err.println(s"Error processing ${problem.source}: ${problem.error}")
+  }
 
-    for (month <- monthsInYear(year))
-      val start       = month.atDay(1)
-      val end         = month.atEndOfMonth
-      val electricity = electricityBetween(start, end)
-      val gas         = gasBetween(start, end)
-      println(s"$start: $end: ${electricity.round}: ${gas.round}")
+  for (monthUsage <- report.months)
+    val start = monthUsage.month.atDay(1)
+    val end   = monthUsage.month.atEndOfMonth
+    println(s"$start: $end: ${monthUsage.electricity.round}: ${monthUsage.gas.round}")

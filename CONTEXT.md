@@ -20,6 +20,14 @@ _Avoid_: usage, amount
 Energy normalised to kilowatt hours, which is what a report prints for both fuels.
 _Avoid_: kilowatt hour
 
+**Month usage**:
+The electricity and the gas one report attributes to one calendar month of its year.
+_Avoid_: monthly total, bucket
+
+**Report**:
+One run over both files for a year: twelve month usages, plus the readings it could not parse.
+_Avoid_: output, result set
+
 ### Toolchain
 
 **Declaration**:
