@@ -164,6 +164,31 @@ class ToolchainTest extends AnyFunSuite {
     assert(declaredVersions("twenty-five", "3.9.0", "1.12.11").isLeft)
   }
 
+  test("miseJava reads the JDK request and drops the distribution") {
+    val config =
+      """[tools]
+        |java  = "temurin-25"
+        |sbt   = "1.12.11"
+        |""".stripMargin
+
+    assert(miseJava(config) == Right("25"))
+  }
+
+  test("miseJava keeps a request that names no distribution") {
+    assert(miseJava("""[tools]
+                     |java = "25"
+                     |""".stripMargin) == Right("25"))
+  }
+
+  test("miseJava rejects a config that declares no java version") {
+    assert(miseJava("""[tools]
+                     |sbt = "1.12.11"
+                     |""".stripMargin).isLeft)
+    assert(miseJava("""[tools]
+                     |java = "lts"
+                     |""".stripMargin).isLeft)
+  }
+
   test("Snapshot parses the published format, ignoring comments and blank lines") {
     val text =
       """# captured upstream

@@ -162,6 +162,20 @@ object Toolchain:
 
   def failed(findings: List[Finding]): Boolean = findings.exists(_.isFailure)
 
+  private val MiseJava = """(?m)^\s*java\s*=\s*"([^"]+)"""".r
+
+  /**
+   * Reads the JDK request from a mise config, such as `java = "temurin-25"`. A request names the
+   * distribution as well as the version, and the policy compares versions, so only the version part
+   * is kept.
+   */
+  def miseJava(config: String): Either[String, String] =
+    MiseJava
+      .findFirstMatchIn(config)
+      .map(found => found.group(1).dropWhile(character => !character.isDigit))
+      .filter(_.nonEmpty)
+      .toRight("mise.toml does not declare a java version")
+
   /**
    * Reads the three declared values as versions. A malformed value fails here rather than being
    * carried into a verdict.
